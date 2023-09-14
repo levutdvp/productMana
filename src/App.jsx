@@ -8,22 +8,30 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from './page/login';
-import { createContext, useState } from 'react';
 
 
-// export const UserContext = createContext(null)
-export const CartContext = createContext(null)
-
-
+export const UserContext = createContext(undefined)
+export const CartContext = createContext(undefined)
 
 function App() {
   const [user,setUser] = useState()
   const [product, setProduct] = useState([])
-  const addToCart = (products) => {
-    setProduct([...product, products]);
+  const addToCart = (newProduct) => {
+    const exitProduct = product.find((item) => item.id === newProduct.id)
+    if(exitProduct){
+      setProduct((prevCart) =>
+        prevCart.map((item) =>
+          item.id === newProduct.id
+            ? { ...item, amount: item.amount + 1 }
+            : item
+        ))
+    } else {
+      setProduct([...product, { ...newProduct, amount: 1 }]);
+    }
+    
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId) => { 
     setProduct(product.filter((item) => item.id !== productId));
   };
 
@@ -49,9 +57,9 @@ function App() {
   }
 ]);
    return (<CartContext.Provider value={{product,setProduct,addToCart, removeFromCart, clearCart}}> 
-   {/* <UserContext.Provider  value={{user,setUser}}> */}
+   <UserContext.Provider  value={{user,setUser}}>
     <RouterProvider router={router} />
-   {/* </UserContext.Provider>  */}
+   </UserContext.Provider> 
    </CartContext.Provider>) 
    
 }

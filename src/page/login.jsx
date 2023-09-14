@@ -7,9 +7,10 @@ const Login = () => {
   const nameRef = useRef(null);
   const mailRef = useRef(null);
   const navigate = useNavigate();
+   const user = useContext(UserContext)
 
   function login() {
-      const user = useContext(UserContext)
+     
 
     const name = nameRef.current?.value;
     const email = mailRef.current?.value;

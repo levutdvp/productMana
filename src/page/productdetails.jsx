@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../App';
 
 const ProductDetail = ({ product }) => {
-  const addToCart  = useContext(CartContext);
+  const {addToCart} = useContext(CartContext);
     console.log(useContext(CartContext));
   const handleAddToCart = () => {
     addToCart(product);
@@ -15,7 +15,6 @@ const ProductDetail = ({ product }) => {
       <p>ID: {product.id}</p>
       <p>Name: {product.name}</p>
       <p>Price: {product.price}</p>
-      <p>Description: {product.description}</p>
       <button onClick={handleAddToCart}>Add to Cart</button>
       <Link to="/">Back to Home</Link>
     </div>

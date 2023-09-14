@@ -198,13 +198,13 @@ const Home = () =>{
         />
       </div>
       <ul>
-        {tasks.map(task => ( 
-          <li style={{listStyleType:'none'}}> 
+        {tasks.map((task, index) => ( 
+          <li key={index} style={{listStyleType:'none'}}> 
             {task.name} - price {task.price} - quantity {task.quantity} - {task.category} - {task.email} 
              <button onClick={() => editUser(task)}>Edit</button>
             <button onClick={() => deleteUser(task.id)}>Delete</button>
             <Link to={`/user/${task.id}`}>Details</Link>
-            <button onClick={handleOrder(task)}>Order</button>
+            <button onClick={() => handleOrder(task)}>Order</button>
           </li>
         ))}
       </ul>
