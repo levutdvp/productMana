@@ -2,8 +2,9 @@ import axios from "axios";
 import { Link,useNavigate } from 'react-router-dom';
 import React, { useState, useEffect,useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { api } from '../axios-instance';
-import { UserContext } from "../App";
+// import { UserContext } from "../App";
 import { CartContext } from "../App";
 const Home = () =>{
     const { control, handleSubmit, reset, setValue } = useForm();
@@ -101,27 +102,28 @@ const Home = () =>{
   const handleLimitChange = (newLimit) => {
     setLimit(newLimit);
   };
-  const userContext = useContext(UserContext)
+  const userLogin = useSelector(state => state.userLogin)
   const navigate = useNavigate();
 
 
-  const  {addToCart}  = useContext(CartContext);
+  const  addToCart  = useSelector(state => state.cartShopping)
   const navigates = useNavigate();
-
+  // const removeFromCart = useSelector(state => state.cartShopping)
+  // const clearCart = useSelector(state => state.cartShopping)
   const handleOrder = (product) => {
     addToCart(product);
     navigates('/cart'); 
   };
 
   useEffect(() => {
-    if (!userContext.user) {
+    if (!userLogin?.name) {
       navigate('/login')
     }
-  }, [userContext?.user])
+  }, [userLogin?.name])
+  
   return (
     <div className="App">
       <h1>User Management</h1>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="hidden" name="id" ref={control} />
         <div>

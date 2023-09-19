@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../App';
-
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 const ProductDetail = ({ product }) => {
-  const {addToCart} = useContext(CartContext);
-    console.log(useContext(CartContext));
+  const addToCart = useSelector(store => store.cartShopping)
   const handleAddToCart = () => {
     addToCart(product);
   };
