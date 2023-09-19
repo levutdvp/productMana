@@ -4,8 +4,6 @@ import React, { useState, useEffect,useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { api } from '../axios-instance';
-// import { UserContext } from "../App";
-import { CartContext } from "../App";
 const Home = () =>{
     const { control, handleSubmit, reset, setValue } = useForm();
   const [users, setUsers] = useState([]);
@@ -41,16 +39,19 @@ const Home = () =>{
 
 
 
-  useEffect(() => {
-    api.get('/user')
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        alert('Error!', error);
-      });
-  }, []);
-
+  // useEffect(() => {
+  //   api.get('/user')
+  //     .then(response => {
+  //       setUsers(response.data);
+  //     })
+  //     .catch(error => {
+  //       alert('Error!', error);
+  //     });
+  // }, []);
+  async function getUser(){
+    const response = await api.get('/user')
+    setUsers(response.data)
+  }
   const onSubmit = (data) => {
     if (editingUserId) {
       api.put(`/user/${editingUserId}`, data)
@@ -120,6 +121,12 @@ const Home = () =>{
       navigate('/login')
     }
   }, [userLogin?.name])
+
+
+  useEffect(() => {
+    getUser();
+  }, [])
+
   
   return (
     <div className="App">
